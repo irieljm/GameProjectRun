@@ -1,6 +1,6 @@
 class Player {
   constructor(playerImage) {
-    this.image = playerImage; //=> this allowes to add more players
+    this.image = playerImage; //=> this allows to add more players
     this.height = 180;
     this.width = 100;
     this.x = 0;
@@ -24,20 +24,17 @@ class Player {
   }
 
   jump() {
-    if (this.y = height - this.height) {
+    if ((this.y = height - this.height)) {
       this.velocity = -8;
       console.log("this will be the jump");
     }
-
   }
-  
+
   run() {
-    if (this.x = width - 500) {
+    if ((this.x = width - 500)) {
       this.velocity = 2;
       this.speedX = 5;
       console.log("this will be new position");
     }
-
   }
-
 }
