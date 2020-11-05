@@ -9,13 +9,12 @@ class Player {
     this.velocity = 0;
     this.speedX = 0;
     this.speedY = 0;
-    this.score = 0;
-
     // set the height, the initial location + the jump controls for the player
   }
   drawPlayer() {
     this.velocity += this.gravity;
     this.y += this.velocity;
+    console.log(this.y);
     // draw the player + jump logic with velocity
     if (this.y >= height - this.height) {
       this.y = height - this.height;
@@ -24,17 +23,21 @@ class Player {
   }
 
   jump() {
-    if ((this.y = height - this.height)) {
-      this.velocity = -8;
-      console.log("this will be the jump");
+    if (this.y == height - this.height) {
+      this.velocity = -10;
     }
   }
 
-  run() {
-    if ((this.x = width - 500)) {
-      this.velocity = 2;
-      this.speedX = 5;
-      console.log("this will be new position");
+  runForwards() {
+    if (this.x < width - this.width) {
+      this.x += 5;
     }
-  }
+  };
+
+  runBackwards() {
+    if (this.x > 0) {
+      this.x -= 5;
+    }
+  };
 }
+

@@ -1,9 +1,12 @@
 class Game {
   constructor() {
-    this.obstacles = [];
+    this.players = [];
+    this.coins = [];
+    this.enemies = [];
+    this.gameOver = false;
   }
   preloadGame() {
-    console.log("this is the game preload");
+    //console.log("this is the game preload");
     this.backgroundImages = [
       {
         src: loadImage("../assets/background/country-platform-back.png"),
@@ -24,60 +27,76 @@ class Game {
       },
     ];
     this.playerImage = loadImage("../assets/player/tarzan-run1.gif");
-    this.playerImages = [
-      { name: "tarzan", src: loadImage("assets/player/tarzan-run1.gif") },
-      { name: "beejo", src: loadImage("assets/player/beejo-run.gif") },
-    ];
-    this.obstaclesImages = [
-      { name: "coins", src: loadImage("assets/obstacles/coins2.gif") },
-      { name: "box", src: loadImage("assets/obstacles/box.png") },
-      { name: "brick", src: loadImage("assets/obstacles/brick.png") },
-    ];
     this.coinImage = loadImage("assets/obstacles/coins2.gif");
-
-    this.enemyImages = [
-      { src: loadImage("assets/obstacles/ninja.gif") },
-      { src: loadImage("assets/obstacles/zombie-green.gif") },
-      { src: loadImage("assets/obstacles/crab.gif") },
-    ];
+    this.enemiesImage = loadImage("assets/obstacles/rogue3.gif");
+      
+    this.scoreBoard = new ScoreBoard();    
   }
+
 
   setupGame() {
     this.background = new Background(this.backgroundImages);
-    // for (let i = 0; i < this.obstacles.length; i++) {
-    //   obstacles[i] = new Obstacle(obstacles[i]);
-    // }
     this.player = new Player(this.playerImage);
-
-    // for (let i = 0; i < obstacles.length; i++) {
-    //   obstacles[i] = new Obstacle(obstacles[i]);
-    // }
-
-    this.enemies = [];
-    //this.enemyImage = new obstacle(this.enemyImages[0]);
   }
+
+  finishGame() {
+    this.gameOver = true;
+    clear();
+      this.background.drawBackground();
+    fill("red");
+    rect(100, 100, 800, 300, 20);
+    fill(0, 102, 153);
+    textSize(32);
+    textAlign(CENTER, CENTER);
+
+    text(`YOU'RE DEAD!! Final Score: ${this.scoreBoard.score}`, 100, 100, 800, 300);
+  }
+
   drawGame() {
-    this.background.drawBackground();
-    this.player.drawPlayer();
-    // this.frame = 0;
-    // this.interval = setInterval(this.drawGame, 3000);
-    if (frameCount % 180 === 0) {
-      //if this number (%60=0) at that moment, push a new obstacle
-      //console.log("this will be the push event");
+    if(!this.gameOver) {
+      clear();
+      this.background.drawBackground();
+      this.player.drawPlayer();
+      this.scoreBoard.draw();
 
-      this.obstacles.push(new Obstacle(this.obstaclesImages));
-    }
+      if (frameCount % 180 === 0) { // 60fps -> every 3 seconds
+        this.coins.push(new Coin(this.coinImage, height, height - this.player.height));
+      };
 
-    this.obstacles.forEach(function (obstacle) {
-      obstacle.drawObstacle();
-    });
+      this.coins.forEach(function (coin) {
+        coin.draw();
+      });
 
-    this.obstacles = this.obstacles.filter((obstacle) => {
-      if (obstacle.collision(this.player) || obstacle.x < 0) {
-        return false;
-      } else {
-        return true;
+      if (frameCount % 300 === 0) { // 60fps -> every 5 seconds
+        this.enemies.push(new Enemy(this.enemiesImage));
       }
-    });
+      this.enemies.forEach(function (enemy) {
+        enemy.drawEnemy();
+      });
+
+      this.enemies = this.enemies.filter(function (enemy) {
+        if (enemy.x < 0) {
+          return false;
+        }
+        return true;
+      });
+      this.enemies.forEach((enemy) => {
+        if (enemy.isCollision(this.player)) {
+          this.finishGame();
+        }
+      });
+
+      this.coins = this.coins.filter((coin) => {
+        if (coin.isCollision(this.player)) {
+          game.scoreBoard.raiseScore(10);
+          return false;
+        } else if (coin.x < 0) {
+          return false;
+        }
+        return true;
+      });
+    }
   }
 }
+
+
