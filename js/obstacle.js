@@ -1,16 +1,14 @@
 class Obstacle {
-    constructor(coinImage) {
-    this.image = coinImage;
-    // this.x = width;
-    // this.y = (Math.random() * height) / 1.2;
-    // this.width = 20;
-    // this.height = 20;
+  constructor(obstaclesImages) {
+    this.image = obstaclesImages;
     this.x = width;
-    // this.y = (Math.random() * height) / 1.2;
-    // this.width = 20;
-    this.height = Math.floor(minHeight+Math.random()*(maxHeight-minHeight+1));
-    this.width = Math.floor(minWidth+Math.random()*(maxWidth-minWidth+1));
-
+    this.y = (Math.random() * height) / 1.2;
+    this.height = Math.floor(
+      minHeight + Math.random() * (maxHeight - minHeight + 1)
+    );
+    this.width = Math.floor(
+      minWidth + Math.random() * (maxWidth - minWidth + 1)
+    );
   }
 
   //   define the collision function
@@ -30,11 +28,8 @@ class Obstacle {
     }
   }
 
-  drawObstacle(){
-    this.obstacles[i].x -=1;
-    this.obstacles[i].draw();
-    // this.x--;
-    this.collision(game.player);
-    image(this.image, this.x, this.y, this.width, this.height);
+  drawObstacle() {
+    this.x -= 4;
+    image(this.image[1].src, this.x, this.y, this.width, this.height);
   }
 }
