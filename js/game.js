@@ -9,25 +9,25 @@ class Game {
     //console.log("this is the game preload");
     this.backgroundImages = [
       {
-        src: loadImage("/assets/background/country-platform-back.png"),
+        src: loadImage("assets/background/country-platform-back.png"),
         x: 0,
         speed: 0,
       },
       {
-        src: loadImage("/assets/background/country-platform-forest.png"),
+        src: loadImage("assets/background/country-platform-forest.png"),
         x: 0,
         speed: 1,
       },
       {
         src: loadImage(
-          "/assets/background/country-platform-tiles-example.png"),
+          "assets/background/country-platform-tiles-example.png"),
         x: 0,
         speed: 2,
       },
     ];
-    this.playerImage = loadImage("/assets/player/tarzan-run1.gif");
-    this.coinImage = loadImage("/assets/obstacles/coins2.gif");
-    this.enemiesImage = loadImage("/assets/obstacles/rogue3.gif");
+    this.playerImage = loadImage("assets/player/tarzan-run1.gif");
+    this.coinImage = loadImage("assets/obstacles/coins2.gif");
+    this.enemiesImage = loadImage("assets/obstacles/rogue3.gif");
       
     this.scoreBoard = new ScoreBoard();    
   }
