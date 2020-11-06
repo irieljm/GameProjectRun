@@ -9,13 +9,10 @@ class Player {
     this.velocity = 0;
     this.speedX = 0;
     this.speedY = 0;
-    // set the height, the initial location + the jump controls for the player
   }
   drawPlayer() {
     this.velocity += this.gravity;
     this.y += this.velocity;
-    console.log(this.y);
-    // draw the player + jump logic with velocity
     if (this.y >= height - this.height) {
       this.y = height - this.height;
     }
